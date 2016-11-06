@@ -1,19 +1,9 @@
 import React, { PropTypes, Component, cloneElement } from 'react'
-import Quill from 'quill'
 import ReactDOM from 'react-dom'
+
+import Quill from 'quill'
 import QuillToolbar from './toolbar'
 import { find } from './utils'
-
-const dirtyProps = [
-  'id',
-  'className',
-  'modules',
-  'toolbar',
-  'formats',
-  'styles',
-  'theme',
-  'pollInterval'
-]
 
 class QuillComponent extends Component {
 
@@ -26,9 +16,15 @@ class QuillComponent extends Component {
     placeholder: PropTypes.string,
     readOnly: PropTypes.bool,
     modules: PropTypes.object,
-    toolbar: PropTypes.oneOfType([ PropTypes.array, PropTypes.oneOf([false]), ]), // deprecated for v1.0.0, use toolbar module
+    toolbar: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.oneOf([false])
+    ]),
     formats: PropTypes.array,
-    styles: PropTypes.oneOfType([ PropTypes.object, PropTypes.oneOf([false]) ]),
+    styles: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.oneOf([false])
+    ]),
     theme: PropTypes.string,
     pollInterval: PropTypes.number,
     onKeyPress: PropTypes.func,
@@ -44,6 +40,19 @@ class QuillComponent extends Component {
     modules: {}
   }
 
+  static dirtyProps = [
+    'id',
+    'className',
+    'modules',
+    'toolbar',
+    'formats',
+    'styles',
+    'theme',
+    'pollInterval'
+  ]
+
+  static displayName = 'Quill'
+
   constructor (props){
     super(props)
     this.state = {
@@ -54,7 +63,7 @@ class QuillComponent extends Component {
   }
 
   isControlled = () => {
-    return 'value' in this.props;
+    return 'value' in this.props
   }
 
   componentWillReceiveProps= (nextProps) => {
@@ -90,7 +99,6 @@ class QuillComponent extends Component {
     const editorConfig = this.getEditorConfig()
     const editor = new Quill(editorEl, editorConfig)
 
-    // this.setCustomFormats(editor); // deprecated in Quill v1.0
     const fontOptions = document.querySelectorAll('.quill-toolbar .ql-font.ql-picker .ql-picker-item')
 
     for (let i=0; i<fontOptions.length; ++i) {
@@ -107,42 +115,25 @@ class QuillComponent extends Component {
 
   shouldComponentUpdate = (nextProps, nextState) => {
     // Check if one of the changes should trigger a re-render.
-    for (var i=0; i< dirtyProps.length; i++) {
-      var prop = dirtyProps[i];
+    for(const prop of this.dirtyProps) {
       if (nextProps[prop] !== this.props[prop]) {
-        return true;
+        return true
       }
     }
     // Never re-render otherwise.
-    return false;
+    return false
   }
 
-  /*
-  If for whatever reason we are rendering again,
-  we should tear down the editor and bring it up
-  again.
-  */
+  // If for whatever reason we are rendering again,
+  // we should tear down the editor and bring it up
+  // again.
+
   componentWillUpdate = () => {
-    this.componentWillUnmount();
+    this.componentWillUnmount()
   }
 
   componentDidUpdate = () => {
-    this.componentDidMount();
-  }
-
-  /**
-   * @deprecated v1.0.0
-   */
-  setCustomFormats =  (editor) => {
-    const { formats } = this.props
-    if (!formats) {
-      return
-    }
-
-    for (let i = 0; i < formats.length; i++) {
-      const format = formats[i]
-      editor.addFormat(format.name || format, format)
-    }
+    this.componentDidMount()
   }
 
   /**
@@ -150,13 +141,13 @@ class QuillComponent extends Component {
   be passed the configuration, have its events bound,
   */
   createEditor = ($el, config) => {
-    var editor = 
-    this.hookEditor(editor);
-    return editor;
+    const editor = new Quill($el, config)
+    this.hookEditor(editor)
+    return editor
   }
 
   setEditorReadOnly = (editor, value) => {
-    value ? editor.disable() : editor.enable();
+    value ? editor.disable() : editor.enable()
   }
 
   /*
@@ -202,7 +193,7 @@ class QuillComponent extends Component {
     // Expose the editor on change events via a weaker,
     // unprivileged proxy object that does not allow
     // accidentally modifying editor state.
-    const unprivilegedEditor = this.makeUnprivilegedEditor(editor);
+    const unprivilegedEditor = this.makeUnprivilegedEditor(editor)
 
     editor
       .on('text-change', (delta, oldDelta, source) => {
@@ -229,7 +220,7 @@ class QuillComponent extends Component {
   }
 
   /*
-  Returns an weaker, unprivileged proxy object that only
+  Returns a weaker, unprivileged proxy object that only
   exposes read-only accessors found on the editor instance,
   without any state-modificating methods.
   */
@@ -253,28 +244,28 @@ class QuillComponent extends Component {
   }
 
   getEditorContents = () => {
-    return this.state.value;
+    return this.state.value
   }
 
   getEditorSelection = () => {
-    return this.state.selection;
+    return this.state.selection
   }
   onEditorChange = (value, delta, source, editor) => {
     if (value !== this.getEditorContents()) {
-      this.setState({ value });
+      this.setState({ value })
       if (this.props.onChange) {
-        this.props.onChange(value, delta, source, editor);
+        this.props.onChange(value, delta, source, editor)
       }
     }
   }
 
   onEditorChangeSelection = (range, source, editor) => {
-    const s = this.getEditorSelection() || {};
-    const r = range || {};
+    const s = this.getEditorSelection() || {}
+    const r = range || {}
     if (r.length !== s.length || r.index !== s.index) {
-      this.setState({ selection: range });
+      this.setState({ selection: range })
       if (this.props.onChangeSelection) {
-        this.props.onChangeSelection(range, source, editor);
+        this.props.onChangeSelection(range, source, editor)
       }
     }
   }
@@ -283,7 +274,7 @@ class QuillComponent extends Component {
     if (range) {
       // Validate bounds before applying.
       var length = editor.getLength()
-      range.index = Math.max(0, Math.min(range.index, range.length-1))
+      range.index = Math.max(0, Math.min(range.index, range.length - 1))
       range.length = length
     }
     editor.setSelection(range)
@@ -367,6 +358,5 @@ class QuillComponent extends Component {
   }
 }
 
-QuillComponent.displayName = 'Quill'
 
 export default QuillComponent

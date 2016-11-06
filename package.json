@@ -2,16 +2,16 @@
   "name": "react-quill",
   "version": "2.0.1",
   "description": "The Quill rich-text editor as a React component.",
-  "author": "zenoamaro <zenoamaro@gmail.com>",
-  "homepage": "https://github.com/zenoamaro/react-quill",
+  "author": "tausch86 <tausch86@gmail.com>",
+  "homepage": "https://github.com/zenoamaro/react-quill-es6",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zenoamaro/react-quill/issues",
-    "email": "zenoamaro@gmail.com"
+    "url": "https://github.com/tausch86/react-quill-es6/issues",
+    "email": "tausch86@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zenoamaro/react-quill.git"
+    "url": "https://github.com/tausch86/react-quill-es6.git"
   },
   "main": "src/index.js",
   "scripts": {
@@ -21,11 +21,12 @@
     "watch": "make watch"
   },
   "engines": {
-    "node": ">= 0.8.x"
+    "node": ">= 6.2.1"
   },
   "keywords": [
     "react",
     "react-component",
+    "es6",
     "rich",
     "text",
     "rich-text",
@@ -42,7 +43,7 @@
     "quill": "^1.1.3"
   },
   "peerDependencies": {
-    "react": ">=0.14.0"
+    "react": ">=0.15.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -51,16 +52,9 @@
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
-    "blanket": "^1.1.6",
     "jsdom": "^7.0.1",
-    "jshint": "^2.5.10",
-    "mocha": "^2.0.1",
-    "mocha-text-cov": "^0.1.0",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "should": "^4.3.0",
-    "sinon": "^1.12.1",
-    "travis-cov": "^0.2.5",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
     "uglify-js": "^2.4.15",
     "webpack": "^1.4.13"
   }

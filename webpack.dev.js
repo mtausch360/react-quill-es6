@@ -9,8 +9,8 @@ module.exports = {
 
 	output: {
 		pathinfo: true,
-		filename: './dist/react-quill.js',
-		library: 'ReactQuill',
+		filename: './dist/react-quill-es6.js',
+		library: 'ReactQuillES6',
 		libraryTarget: 'umd'
 	},
 

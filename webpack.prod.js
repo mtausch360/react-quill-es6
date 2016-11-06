@@ -8,8 +8,8 @@ module.exports = {
 	devtool: 'module-source-map',
 
 	output: {
-		filename: './dist/react-quill.min.js',
-		library: 'ReactQuill',
+		filename: './dist/react-quill-es6.min.js',
+		library: 'ReactQuillES6',
 		libraryTarget: 'umd'
 	},
 
