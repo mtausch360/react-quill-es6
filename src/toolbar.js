@@ -10,14 +10,13 @@ class QuillToolbar extends Component {
     items:     PropTypes.array
   }
 
-  static defaultItems = defaultItems
-
-  static defaultColors = defaultColors
-
   static defaultProps = {
     items: defaultItems,
     className: ''
   }
+
+ static displayName = 'Quill Toolbar'
+
 
   getClassName = () => {
     return `quill-toolbar ${this.props.className}`
@@ -63,27 +62,29 @@ class QuillToolbar extends Component {
   }
 
   renderButton = (item, key) => {
+    const { label, value, type, children } = item
     return (
       <button
         type='button'
-        key={ item.label || item.value || key }
-        value={ item.value }
-        className={ `ql-${item.type}` }
-        title={ item.label }
+        key={ label || value || key }
+        value={ value }
+        className={ `ql-${type}` }
+        title={ label }
       >
-       { item.children }
+       { children }
       </button>
     )
   }
 
   renderAction = (item, key) => {
+    const { label, value, type, children } = item
     return (
       <span
-        key={ item.label || item.value || key }
-        className={ `ql-${item.type}`}
-        title={ item.title }
+        key={ label || value || key }
+        className={ `ql-${type}`}
+        title={ title }
       >
-        { item.children }
+        { children }
       </span>
     )
   }
@@ -117,8 +118,8 @@ class QuillToolbar extends Component {
   }
 
   render = () => {
-    const { style } = this.props
-    const children = this.props.items.map(this.renderItem)
+    const { style, items } = this.props
+    const children = items.map(this.renderItem)
     const __html = children.map(ReactDOMServer.renderToStaticMarkup).join('')
     return (
       <div
@@ -129,7 +130,5 @@ class QuillToolbar extends Component {
     )
   }
 }
-
-QuillToolbar.displayName = 'Quill Toolbar'
 
 export default QuillToolbar

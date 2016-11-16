@@ -15,16 +15,13 @@ class Editor extends Component {
     }
   }
 
-
   formatRange = (range) => {
-    return range
-      ? [range.start, range.end].join(',')
-      : 'none';
+    return range ? [range.start, range.end].join(',') : 'none';
   }
 
   onTextareaChange = (event) => {
     var value = event.target.value;
-    this.setState({ value:value });
+    this.setState({ value });
   }
 
   onEditorChange = (value, delta, source) => {
@@ -120,7 +117,6 @@ class Editor extends Component {
 
 
 window.addEventListener('DOMContentLoaded', function() {
-  console.log('func run')
   ReactDOM.render(
     <Editor />,
     document.getElementById('app')
